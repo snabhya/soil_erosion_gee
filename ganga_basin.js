@@ -163,15 +163,6 @@ Map.addLayer(
   0
 );
 
-var clippedData = originalData.clip(roi);
-
-var meanC = clippedData.reduceRegion({
-  reducer: ee.Reducer.mean(),
-  geometry: roi,
-  scale: 30, // Adjust scale based on data resolution
-  maxPixels: 1e9, // Increase if needed
-});
-
 var alpha = ee.Number(-2);
 var C1 = image_ndvi.multiply(alpha);
 var oneImage = ee.Image(1).clip(aoi);
