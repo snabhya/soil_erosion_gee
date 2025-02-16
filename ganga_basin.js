@@ -1,3 +1,5 @@
+// Watch Video Tutorial https://youtu.be/vhwhPrlxDeg
+
 // ------------------- Data Sources -------------------
 var CHIRPS = ee.ImageCollection("UCSB-CHG/CHIRPS/PENTAD"),
   soil = ee.Image("OpenLandMap/SOL/SOL_TEXTURE-CLASS_USDA-TT_M/v02"),
@@ -19,7 +21,7 @@ Map.addLayer(aoi, {}, "AOI");
 Map.centerObject(aoi);
 
 // ------------------- Define Dates -------------------
-var date1 = "2010-01-01";
+var date1 = "2003-01-01";
 var date2 = "2018-01-01";
 
 // ------------------- R Factor -------------------
@@ -35,7 +37,7 @@ var current = CHIRPS.filterDate(date1, date2)
 Map.addLayer(current, {}, "Annual Rain", 0);
 
 // Compute yearly R factor using an empirical equation: R = 0.363 * P + 79
-var years = ee.List.sequence(2010, 2018); // only one year in this case
+var years = ee.List.sequence(2003, 2018); // only one year in this case
 var yearlyR = years.map(function (year) {
   var start = ee.Date.fromYMD(year, 1, 1);
   var end = start.advance(1, "year");
@@ -161,7 +163,6 @@ Map.addLayer(
   0
 );
 
-var roi = ee.Geometry.Rectangle([minLon, minLat, maxLon, maxLat]);
 var clippedData = originalData.clip(roi);
 
 var meanC = clippedData.reduceRegion({
